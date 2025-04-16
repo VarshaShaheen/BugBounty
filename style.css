@@ -1,0 +1,233 @@
+/* ----- Reset & Body Setup ----- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Constant cream background */
+  background: #fdf2e3;
+  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Title Animations */
+h1 {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-shadow: 2px 2px #fff;
+  position: relative;
+  animation: wiggleTitle 3s infinite;
+}
+@keyframes wiggleTitle {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(2deg); }
+  50%  { transform: rotate(0deg); }
+  75%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ----- Podium Section ----- */
+.podium-section {
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.podium-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+/* Each podium "column" card */
+.podium-card {
+  position: relative;
+  width: 100px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-300px) rotate(-20deg);
+  opacity: 0;
+  animation: flyIn 1s forwards ease-in-out;
+  justify-content: flex-start; /* name & points on top */
+}
+.podium-card:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.podium-card:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.podium-card:nth-child(3) {
+  animation-delay: 0.9s;
+}
+
+@keyframes flyIn {
+  0% {
+    transform: translateY(-300px) rotate(-20deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(30px) rotate(20deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Height / color changes for 1st, 2nd, 3rd */
+.podium-first {
+  height: 200px;
+  background-color: #ffe4b2; /* highlight for 1st place */
+}
+.podium-second {
+  height: 170px;
+  background-color: #f5f5f5;
+}
+.podium-third {
+  height: 150px;
+  background-color: #f5f5f5;
+}
+
+/* Double podium size on desktop */
+@media (min-width: 992px) {
+  .podium-card {
+    width: 200px;
+  }
+  .podium-first {
+    height: 400px;
+  }
+  .podium-second {
+    height: 340px;
+  }
+  .podium-third {
+    height: 300px;
+  }
+}
+
+/* Name & points at the top */
+.podium-card h3 {
+  margin-top: 0.25rem;
+  font-size: 1rem;
+}
+.podium-card .points {
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: #333;
+  color: #fff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  width: 70px;
+  align-self: center;
+}
+
+/* Podium images anchored at the bottom */
+.podium-img {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%); /* hidden below the podium initially */
+  animation: popUp 0.8s forwards ease-in-out 1s;
+}
+@keyframes popUp {
+  0%   { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+
+/* ----- Leaderboard Table ----- */
+.leaderboard-table-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 600px;
+  overflow: hidden;
+  animation: bounceIn 1.5s ease-out;
+}
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Make the leaderboard bigger on large screens */
+@media (min-width: 992px) {
+  .leaderboard-table-wrapper {
+    max-width: 900px;
+  }
+}
+
+table#leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+}
+table#leaderboard th {
+  background: #fa866e;
+  color: #fff;
+  text-align: left;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+table#leaderboard td {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+table#leaderboard tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* ----- Mobile-specific Tweaks ----- */
+@media (max-width: 576px) {
+  /* Increase podium height on mobile */
+  .podium-first {
+    height: 200px;  /* or larger if you prefer */
+  }
+  .podium-second {
+    height: 170px;
+  }
+  .podium-third {
+    height: 150px;
+  }
+
+  /* Center only the podium on mobile */
+  .podium-container {
+    margin: 0 auto;         /* center the podium container */
+    justify-content: center;
+  }
+
+  /* Reduce size of points box on mobile if needed */
+  .podium-card .points {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
