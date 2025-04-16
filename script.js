@@ -1,17 +1,8 @@
+// script.js
+
 const CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzRyX-vmf8Q8o_ADAT8C70IjLizGxjn2xXVxVT5Hn857LZSMf3aw5L2L6MGqg2Dht0HDyJ6AafGaIA/pub?gid=1270119593&single=true&output=csv";
 
-/*
-  We'll display:
-    - 2nd place => "two.png"
-    - 1st place => "three.png"
-    - 3rd place => "one.png"
-
-  Because in createPodium(), we have order = [1, 0, 2].
-  => index=0 => 2nd place => 'two.png'
-  => index=1 => 1st place => 'three.png'
-  => index=2 => 3rd place => 'one.png'
-*/
 const podiumImages = ["two.png", "three.png", "one.png"];
 
 function parseCSV(text) {
@@ -39,14 +30,16 @@ function parseCSV(text) {
 
 async function loadData() {
   try {
+    // Show the loader (optional if you want to ensure it's visible)
+    // showLoader();
+
     const response = await fetch(CSV_URL);
     const csvText = await response.text();
     let users = parseCSV(csvText);
 
-    // Filter out invalid entries
+    // Filter out invalid
     users = users.filter(u => u.email && !isNaN(u.points));
-
-    // Sort descending by points
+    // Sort descending
     users.sort((a, b) => b.points - a.points);
 
     const top3 = users.slice(0, 3);
@@ -54,15 +47,19 @@ async function loadData() {
 
     createPodium(top3);
     fillTable(rest);
+
+    // Once data is rendered, hide the loader
+    hideLoader();
+
   } catch (error) {
-    console.error("Error loading or parsing CSV:", error);
+    console.error("Error loading/parsing CSV:", error);
+    hideLoader(); // hide even on error, or show an error message
   }
 }
 
 function createPodium(top3) {
   const podium = document.getElementById("podium");
-  // The array order => [1, 0, 2] => 2nd, 1st, 3rd
-  const order = [1, 0, 2];
+  const order = [1, 0, 2];  // 2nd, 1st, 3rd
   const podiumClasses = ["podium-second", "podium-first", "podium-third"];
 
   order.forEach((posIndex, idx) => {
@@ -76,7 +73,6 @@ function createPodium(top3) {
       <h3>${user.name}</h3>
       <div class="points">${user.points} pts</div>
     `;
-
     // Add the respective image for each place
     const imageFile = podiumImages[idx];
     contentHTML += `
@@ -86,7 +82,6 @@ function createPodium(top3) {
         class="podium-img"
       />
     `;
-
     card.innerHTML = contentHTML;
     podium.appendChild(card);
   });
@@ -107,5 +102,5 @@ function fillTable(users) {
   });
 }
 
-// Initialize
+// Start
 loadData();
