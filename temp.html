@@ -307,7 +307,7 @@
       animation-delay: 750ms;
     }
 
-    /* ----- The 4 images (one.png, two.png, three.png, four.png) spread out inside .content ----- */
+    /* ----- The 4 images (three.png, two.png, one.png, four.png) spread out inside .content ----- */
     .images-wrapper {
       width: 100%;
       height: 100%;
@@ -326,10 +326,13 @@
       transform: translate(-70%, -50%) rotate(30deg) translateX(3em) rotate(0deg);
     }
     .image-item:nth-child(2) {
-      transform: translate(-50%, -50%) rotate(90deg) translateX(3em) rotate(-90deg);
+      transform: translate(-50%, -0%) rotate(90deg) translateX(3em) rotate(-90deg);
     }
     .image-item:nth-child(3) {
       transform: translate(-70%, -0%) rotate(210deg) translateX(3em) rotate(-180deg);
+    }
+    .image-item:nth-child(4) {
+       transform: translate(-50%, -60%) rotate(90deg) translateX(3em) rotate(-90deg);
     }
 
   </style>
@@ -356,9 +359,10 @@
 
         <!-- The 4 images, spread in a circle -->
         <div class="images-wrapper">
-          <img src="images/one.png"   alt="One"   class="image-item" />
+          <img src="images/three.png" alt="One" class="image-item" />
           <img src="images/two.png"   alt="Two"   class="image-item" />
-          <img src="images/three.png" alt="Three" class="image-item" />
+          <img src="images/one.png" alt="Three" class="image-item" />
+          <img src="images/four.png" alt="Three" class="image-item" />
         </div>
       </div>
 
